@@ -135,6 +135,7 @@ namespace AUMod.Patches
 
         public static bool Prefix(UseButton __instance, [HarmonyArgument(0)] IUsable target)
         {
+            __instance.enabled = true;
 
             if (isBlocked(target)) {
                 __instance.currentTarget = null;
