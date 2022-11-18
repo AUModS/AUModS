@@ -13,10 +13,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Resources/ModStamp.png" />
-    </ItemGroup>
-
-    <ItemGroup>
         <Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
         <Reference Include="$(AmongUs)/BepInEx/unhollowed/*.dll" />
     </ItemGroup>
