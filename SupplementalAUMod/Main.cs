@@ -38,7 +38,7 @@ public class AUModPlugin : BasePlugin {
     {
         if (ModStamp)
             return ModStamp;
-        ModStamp = Helpers.loadSpriteFromResources("SupplementalAUMod.Resources.ModStamp.png", 150f);
+        ModStamp = FastDestroyableSingleton<ModManager>.Instance.ModStamp.sprite;
         return ModStamp;
     }
 }
