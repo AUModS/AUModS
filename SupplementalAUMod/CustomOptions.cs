@@ -176,7 +176,9 @@ public class CustomOption {
         CustomOption parent = null,
         bool isHeader = false)
     {
-        return new CustomOption(id, name, optionType, new string[] { "Off", "On" }, defaultValue ? "On" : "Off", parent, isHeader);
+        var ColoredOff = Helpers.cs(Color.red, "Off");
+        var ColoredOn = Helpers.cs(Color.green, "On");
+        return new CustomOption(id, name, optionType, new string[] { ColoredOff, ColoredOn }, defaultValue ? ColoredOn : ColoredOff, parent, isHeader);
     }
 
     public static void ShareOptionSelections()
