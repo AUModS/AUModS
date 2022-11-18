@@ -114,7 +114,7 @@ namespace AUMod.Patches
             return name == "task_cams" || name == "Surv_Panel" || name == "SurvLogConsole" || name == "SurvConsole";
         }
 
-        private static bool isBlocked(PlayerControl pc, IUsable target)
+        private static bool isBlocked(IUsable target)
         {
             if (target == null)
                 return false;
@@ -135,9 +135,9 @@ namespace AUMod.Patches
 
         public static bool Prefix(UseButton __instance, [HarmonyArgument(0)] IUsable target)
         {
-            PlayerControl pc = PlayerControl.LocalPlayer;
+            __instance.enabled = true;
 
-            if (isBlocked(pc, target)) {
+            if (isBlocked(target)) {
                 __instance.currentTarget = null;
                 __instance.enabled = false;
                 __instance.graphic.color = Palette.DisabledClear;
