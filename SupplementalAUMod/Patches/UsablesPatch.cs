@@ -253,6 +253,8 @@ namespace AUMod.Patches
             {
                 ConsumeAdminTime();
                 isEvilHackerAdmin = false;
+                // reset timer for EvilHacker
+                adminTimer = 0f;
             }
         }
 
