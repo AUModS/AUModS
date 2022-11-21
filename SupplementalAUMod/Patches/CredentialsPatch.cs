@@ -16,19 +16,9 @@ namespace AUMod.Patches
 
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
         private static class MainMenuManagerPatch {
-            private static GameObject modStamp;
-
             public static void Postfix(MainMenuManager __instance)
             {
-                var amongUsLogo = GameObject.Find("bannerLogo_AmongUs");
-
-                modStamp = new GameObject("ModStamp");
-                var rend = modStamp.AddComponent<SpriteRenderer>();
-                rend.sprite = AUModPlugin.GetModStamp();
-                rend.color = new(1, 1, 1, 0.5f);
-                modStamp.transform.parent = amongUsLogo.transform;
-                modStamp.transform.localScale *= 0.6f;
-                modStamp.transform.position = Vector3.up;
+                FastDestroyableSingleton<ModManager>.Instance.ShowModStamp();
             }
         }
 
@@ -54,21 +44,8 @@ namespace AUMod.Patches
 
         [HarmonyPatch(typeof(PingTracker), nameof(PingTracker.Update))]
         private static class PingTrackerPatch {
-            private static GameObject modStamp;
-
             static void Postfix(PingTracker __instance)
             {
-                if (modStamp == null) {
-                    modStamp = new GameObject("ModStamp");
-                    var rend = modStamp.AddComponent<SpriteRenderer>();
-                    rend.sprite = AUModPlugin.GetModStamp();
-                    rend.color = new(1, 1, 1, 0.5f);
-                    modStamp.transform.parent = __instance.transform.parent;
-                    modStamp.transform.localScale *= 0.6f;
-                }
-                float offset = (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started) ? 0.75f : 0f;
-                modStamp.transform.position = FastDestroyableSingleton<HudManager>.Instance.MapButton.transform.position + Vector3.down * offset;
-
                 __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started) {
                     __instance.text.text = $"<size=130%><color=#ff351f>AUModS</color></size> v{AUModPlugin.Version.ToString()}\n" + __instance.text.text;

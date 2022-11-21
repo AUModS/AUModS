@@ -33,13 +33,5 @@ public class AUModPlugin : BasePlugin {
         CustomOptionHolder.Load();
         Harmony.PatchAll();
     }
-
-    public static Sprite GetModStamp()
-    {
-        if (ModStamp)
-            return ModStamp;
-        ModStamp = FastDestroyableSingleton<ModManager>.Instance.ModStamp.sprite;
-        return ModStamp;
-    }
 }
 }
