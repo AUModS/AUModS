@@ -270,7 +270,38 @@ namespace AUMod.Patches
                     return false;
                 }
 
-                return true;
+                if (!isEvilHackerAdmin)
+                    return true;
+
+                __instance.isSab = false;
+                __instance.BackgroundColor.SetColor(Color.green);
+                __instance.SabotageText.gameObject.SetActive(false);
+
+                // count bodies for EvilHacker
+                for (int i = 0; i < __instance.CountAreas.Length; i++) {
+                    CounterArea counterArea = __instance.CountAreas[i];
+
+                    if (!ShipStatus.Instance.FastRooms.ContainsKey(counterArea.RoomType))
+                        continue;
+
+                    PlainShipRoom plainShipRoom = ShipStatus.Instance.FastRooms[counterArea.RoomType];
+                    if (plainShipRoom != null && plainShipRoom.roomArea) {
+                        int num = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
+                        int num2 = num;
+
+                        for (int j = 0; j < num; j++) {
+                            Collider2D collider2D = __instance.buffer[j];
+                            if (!(collider2D.tag == "DeadBody")) {
+                                PlayerControl component = collider2D.GetComponent<PlayerControl>();
+                                if (!component || component.Data == null || component.Data.Disconnected || component.Data.IsDead) {
+                                    num2--;
+                                }
+                            }
+                        }
+                        counterArea.UpdateCount(num2);
+                    }
+                }
+                return false;
             }
         }
 
