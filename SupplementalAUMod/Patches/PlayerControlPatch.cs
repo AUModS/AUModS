@@ -244,18 +244,4 @@ namespace AUMod.Patches
                 __instance.clearAllTasks();
         }
     }
-
-    // this part should be in GameDataPatch.cs
-    [HarmonyPatch(typeof(GameData), nameof(GameData.RpcSetTasks))]
-    public static class SetCoTasksPatch {
-        public static bool Prefix(GameData __instance, [HarmonyArgument(0)] byte playerId, [HarmonyArgument(1)] byte[] taskTypeIds)
-        {
-            if (Madmate.madmate != null && Madmate.madmate.PlayerId == playerId && !Madmate.taskReset) {
-                Madmate.setupTasks();
-                return false;
-            }
-
-            return true;
-        }
-    }
 }
