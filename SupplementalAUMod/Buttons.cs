@@ -40,6 +40,7 @@ static class HudManagerStartPatch {
         evilHackerButton.skipSetCoolDown = true; // workaround
         // TODO: refactor refactor refactor
         evilHackerButton.sprite = EvilHacker.getButtonSprite();
+        evilHackerButton.text = EvilHacker.getButtonText();
         evilHackerButton.positionOffset = new Vector3(0, 2.0f, 0);
         evilHackerButton.positionTransform = true;
 

@@ -103,6 +103,7 @@ public static class Roles {
         public static Color color = Palette.ImpostorRed;
 
         private static Sprite buttonSprite;
+        private static string buttonText;
         public static Sprite getButtonSprite()
         {
             if (buttonSprite)
@@ -110,6 +111,13 @@ public static class Roles {
             UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton];
             buttonSprite = button.Image;
             return buttonSprite;
+        }
+        public static string getButtonText()
+        {
+            if (buttonText != null)
+                return buttonText;
+            buttonText = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin);
+            return buttonText;
         }
 
         public static void clearAndReload()

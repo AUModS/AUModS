@@ -21,6 +21,7 @@ public class CustomButton {
     public bool skipSetCoolDown = false;
     public float EffectDuration;
     public Sprite sprite;
+    public string text;
     public Vector3 positionOffset = new Vector3(0, 0, 0);
     public bool positionTransform = false;
     private HudManager hudManager;
@@ -141,6 +142,8 @@ public class CustomButton {
 
         if (sprite != null)
             actionButton.graphic.sprite = sprite;
+        if (text != null)
+            actionButton.OverrideText(text);
         if (hudManager.UseButton != null && positionTransform) {
             Vector3 pos = hudManager.UseButton.transform.localPosition;
             actionButton.transform.localPosition = pos + positionOffset;
