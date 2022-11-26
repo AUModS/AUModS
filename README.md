@@ -20,6 +20,8 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
   - Cameras
   - Vitals
 * Remove the limit on the number of tasks
+* Random fix wiring locations
+* Random locations to spawn on Airship
 
 ## Installation
 
