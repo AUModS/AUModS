@@ -32,6 +32,8 @@ The installation steps are essentially the same as [TheOtherRoles](https://githu
 * Download the latest release
 * Place the downloaded dll in the plugin folder.
 
+日本語版のインストール方法は[こちら](INSTALL_JP.md)
+
 ## How to contribute
 
 It would be appreciated if you were interested in contributing to this project.
