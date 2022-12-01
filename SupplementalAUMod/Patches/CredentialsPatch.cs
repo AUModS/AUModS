@@ -22,6 +22,15 @@ namespace AUMod.Patches
             }
         }
 
+        [HarmonyPatch(typeof(ModManager), nameof(ModManager.LateUpdate))]
+        private static class ModManagerLateUpdatePatch {
+            public static void Postfix(ModManager __instance)
+            {
+                var modStamp = __instance.ModStamp.transform;
+                modStamp.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - 108f, Screen.height - 108f, -500f));
+            }
+        }
+
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
         private static class VersionShowerPatch {
             static void Postfix(VersionShower __instance)

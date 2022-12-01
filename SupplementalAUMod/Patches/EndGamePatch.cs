@@ -37,6 +37,7 @@ namespace AUMod.Patches
             [HarmonyArgument(0)] ref EndGameResult endGameResult)
         {
             AdditionalTempData.clear();
+            FarSight.activate(false);
 
             TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
 

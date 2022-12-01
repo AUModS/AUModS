@@ -11,6 +11,7 @@ static class HudManagerStartPatch {
     private static CustomButton sheriffKillButton;
     private static CustomButton madmateVentButton;
     private static CustomButton evilHackerButton;
+    private static CustomButton farSightButton;
 
     public static void setCustomButtonCooldowns()
     {
@@ -105,6 +106,27 @@ static class HudManagerStartPatch {
             KeyCode.V
         );
         madmateVentButton.skipSetCoolDown = true; // workaround
+
+        farSightButton = new CustomButton(
+            () => {
+                FarSight.buttonAction();
+            },
+            () => {
+                return PlayerControl.LocalPlayer.Data.IsDead;
+            },
+            () => {
+                return PlayerControl.LocalPlayer.CanMove;
+            },
+            () => {},
+            __instance.UseButton,
+            __instance,
+            KeyCode.F
+        );
+        farSightButton.skipSetCoolDown = true;
+        farSightButton.sprite = FarSight.getButtonSprite();
+        farSightButton.text = "FAR SIGHT";
+        farSightButton.positionTransform = true;
+        farSightButton.positionOffset = new Vector3(-1.8f, 0f, 0f);
 
         // Set the default (or settings from the previous game) timers/durations when spawning the buttons
         setCustomButtonCooldowns();

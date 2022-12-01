@@ -63,6 +63,7 @@ namespace AUMod.Patches
             if (canMadmateSeeImpostorName())
                 resetNameTagsAndColorsToSeeImpostors();
             setNameColors();
+            FarSight.Update();
         }
     }
 }
