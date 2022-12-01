@@ -27,7 +27,7 @@ namespace AUMod.Patches
             public static void Postfix(ModManager __instance)
             {
                 var modStamp = __instance.ModStamp.transform;
-                modStamp.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - 108f, Screen.height - 108f, -500f));
+                modStamp.position = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - 108f, Screen.height - 108f, -1000f));
             }
         }
 
