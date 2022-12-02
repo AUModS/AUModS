@@ -10,6 +10,7 @@ using Hazel;
 using UnhollowerBaseLib;
 using System;
 using System.Text;
+using InnerNet;
 
 namespace AUMod.Patches
 {
@@ -196,6 +197,14 @@ namespace AUMod.Patches
             __instance.enabled = false;
             ShipStatus.RpcEndGame(GameOverReason.ImpostorBySabotage, false);
             return;
+        }
+    }
+
+    [HarmonyPatch(typeof(InnerNetClient), nameof(InnerNetClient.OnDisconnect))]
+    public static class OnDisconnectPatch {
+        public static void Postfix(InnerNetClient __instance)
+        {
+            FarSight.activate(false);
         }
     }
 
