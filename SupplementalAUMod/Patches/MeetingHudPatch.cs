@@ -15,7 +15,7 @@ namespace AUMod.Patches
             spriteRenderer.color = Color.black;
             spriteRenderer.enabled = true;
             blackScreen = spriteRenderer.gameObject;
-            blackScreen.transform.localPosition = new Vector3(0f, 0f, 10f);
+            blackScreen.transform.localPosition = MeetingHud.Instance.BlackBackground.transform.localPosition;
             blackScreen.SetActive(false);
             return blackScreen;
         }
