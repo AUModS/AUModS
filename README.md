@@ -20,6 +20,8 @@ This mod is not affiliated with Among Us or Innersloth LLC, and the content cont
   - Cameras
   - Vitals
 * Remove the limit on the number of tasks
+* Random fix wiring locations
+* Random locations to spawn on Airship
 
 ## Installation
 
@@ -29,6 +31,8 @@ The installation steps are essentially the same as [TheOtherRoles](https://githu
 * Extract BepInEx
 * Download the latest release
 * Place the downloaded dll in the plugin folder.
+
+日本語版のインストール方法は[こちら](INSTALL_JP.md)
 
 ## How to contribute
 
