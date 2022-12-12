@@ -21,10 +21,12 @@ static class HudManagerStartPatch {
     {
         evilHackerButton = new CustomButton(
             () => {
-                PlayerControl.LocalPlayer.NetTransform.Halt();
-                Action<MapBehaviour> evilHackerAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
                 Patches.AdminPanelPatch.isEvilHackerAdmin = true;
-                FastDestroyableSingleton<HudManager>.Instance.ShowMap(evilHackerAction);
+                FastDestroyableSingleton<HudManager>.Instance.ToggleMapVisible(new MapOptions() {
+                        Mode = MapOptions.Modes.CountOverlay,
+                        AllowMovementWhileMapOpen = true,
+                        IncludeDeadBodies = true
+                    });
             },
             () => {
                 return EvilHacker.evilHacker != null &&
@@ -41,7 +43,7 @@ static class HudManagerStartPatch {
         // TODO: refactor refactor refactor
         evilHackerButton.sprite = EvilHacker.getButtonSprite();
         evilHackerButton.text = EvilHacker.getButtonText();
-        evilHackerButton.positionOffset = new Vector3(0, 2.0f, 0);
+        evilHackerButton.positionOffset = new Vector3(0, 1.2f, 0);
         evilHackerButton.positionTransform = true;
 
         // Sheriff Kill

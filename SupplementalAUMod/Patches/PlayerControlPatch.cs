@@ -22,7 +22,7 @@ namespace AUMod.Patches
             PlayerControl targetingPlayer = null)
         {
             PlayerControl result = null;
-            float num = GameOptionsData.KillDistances[Mathf.Clamp(PlayerControl.GameOptions.KillDistance, 0, 2)];
+            float num = AmongUs.GameOptions.GameOptionsData.KillDistances[Mathf.Clamp(GameOptionsManager.Instance.CurrentGameOptions.GetInt(AmongUs.GameOptions.Int32OptionNames.KillDistance), 0, 2)];
             if (!ShipStatus.Instance)
                 return result;
             if (targetingPlayer == null)

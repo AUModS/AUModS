@@ -5,7 +5,7 @@ using UnityEngine;
 using static AUMod.Roles;
 
 namespace AUMod {
-static class MapOptions {
+static class CustomMapOptions {
     // Set values
     public static bool showRoleSummary = true;
 
@@ -60,7 +60,7 @@ static class MapOptions {
 
     private static void UpdateSingleTimerText(ref TMPro.TextMeshPro timerText, float textX, float textY, string textVal)
     {
-        timerText = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText,
+        timerText = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText,
             FastDestroyableSingleton<HudManager>.Instance.transform);
         timerText.transform.localPosition = new Vector3(textX, textY, 0);
         timerText.text = textVal;

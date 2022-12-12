@@ -3,7 +3,7 @@ using Hazel;
 using static AUMod.Roles;
 using static AUMod.HudManagerStartPatch;
 using static AUMod.GameHistory;
-using static AUMod.MapOptions;
+using static AUMod.CustomMapOptions;
 using AUMod.Patches;
 using System.Collections.Generic;
 using System.Linq;
@@ -172,17 +172,17 @@ public static class RPCProcedure {
 
     public static void consumeAdminTime(float delta)
     {
-        MapOptions.adminRemain -= delta;
+        CustomMapOptions.adminRemain -= delta;
     }
 
     public static void consumeCamerasTime(float delta)
     {
-        MapOptions.camerasRemain -= delta;
+        CustomMapOptions.camerasRemain -= delta;
     }
 
     public static void consumeVitalsTime(float delta)
     {
-        MapOptions.vitalsRemain -= delta;
+        CustomMapOptions.vitalsRemain -= delta;
     }
 
     public static void finishShipStatusBegin()

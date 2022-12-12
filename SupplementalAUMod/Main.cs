@@ -18,7 +18,7 @@ namespace AUMod {
 [BepInProcess("Among Us.exe")]
 public class AUModPlugin : BasePlugin {
     public const string Id = "me.tomarai.aumod";
-    public const string VersionString = "0.0.4";
+    public const string VersionString = "2022.12.8.0";
     public static System.Version Version = System.Version.Parse(VersionString);
 
     public static Sprite ModStamp = null;

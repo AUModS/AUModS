@@ -72,7 +72,7 @@ namespace AUMod.Patches
     public class EndGameManagerSetUpPatch {
         public static void Postfix(EndGameManager __instance)
         {
-            if (MapOptions.showRoleSummary) {
+            if (CustomMapOptions.showRoleSummary) {
                 var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
                 GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
                 roleSummary.transform.position = new Vector3(__instance.FrontMost.transform.position.x + 0.1f, position.y - 0.1f, -14f);
@@ -100,22 +100,32 @@ namespace AUMod.Patches
         }
     }
 
-    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
+    [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.IsGameOverDueToDeath))]
+    public class LogicGameFlowNormalPatch {
+        [HarmonyPostfix]
+        public static void Postfix2(ref bool __result)
+        {
+            __result = false;
+        }
+    }
+
+    [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
     class CheckEndCriteriaPatch {
-        public static bool Prefix(ShipStatus __instance)
+        public static bool Prefix()
         {
             if (!GameData.Instance)
                 return false;
             if (DestroyableSingleton<TutorialManager>.InstanceExists) // InstanceExists | Don't check Custom Criteria when in Tutorial
                 return true;
-            var statistics = new PlayerStatistics(__instance);
-            if (CheckAndEndGameForSabotageWin(__instance))
+            ShipStatus ss = ShipStatus.Instance;
+            var statistics = new PlayerStatistics();
+            if (CheckAndEndGameForSabotageWin(ss))
                 return false;
-            if (CheckAndEndGameForTaskWin(__instance))
+            if (CheckAndEndGameForTaskWin(ss))
                 return false;
-            if (CheckAndEndGameForImpostorWin(__instance, statistics))
+            if (CheckAndEndGameForImpostorWin(ss, statistics))
                 return false;
-            if (CheckAndEndGameForCrewmateWin(__instance, statistics))
+            if (CheckAndEndGameForCrewmateWin(ss, statistics))
                 return false;
             return false;
         }
@@ -152,7 +162,7 @@ namespace AUMod.Patches
         {
             if (GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
+                GameManager.Instance.RpcEndGame(GameOverReason.HumansByTask, false);
                 return true;
             }
             return false;
@@ -174,7 +184,7 @@ namespace AUMod.Patches
                     endReason = GameOverReason.ImpostorByVote;
                     break;
                 }
-                ShipStatus.RpcEndGame(endReason, false);
+                GameManager.Instance.RpcEndGame(endReason, false);
                 return true;
             }
             return false;
@@ -184,7 +194,7 @@ namespace AUMod.Patches
         {
             if (statistics.TeamImpostorsAlive == 0) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByVote, false);
+                GameManager.Instance.RpcEndGame(GameOverReason.HumansByVote, false);
                 return true;
             }
             return false;
@@ -193,7 +203,7 @@ namespace AUMod.Patches
         private static void EndGameForSabotage(ShipStatus __instance)
         {
             __instance.enabled = false;
-            ShipStatus.RpcEndGame(GameOverReason.ImpostorBySabotage, false);
+            GameManager.Instance.RpcEndGame(GameOverReason.ImpostorBySabotage, false);
             return;
         }
     }
@@ -202,7 +212,7 @@ namespace AUMod.Patches
         public int TeamImpostorsAlive { get; set; }
         public int TotalAlive { get; set; }
 
-        public PlayerStatistics(ShipStatus __instance)
+        public PlayerStatistics()
         {
             GetPlayerCounts();
         }
