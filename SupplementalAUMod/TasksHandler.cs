@@ -18,7 +18,7 @@ public static class TasksHandler {
             return Tuple.Create(0, 0);
         if (!playerInfo.Object)
             return Tuple.Create(0, 0);
-        if (!PlayerControl.GameOptions.GhostsDoTasks && playerInfo.IsDead)
+        if (!GameOptionsManager.Instance.CurrentGameOptions.GetBool(AmongUs.GameOptions.BoolOptionNames.GhostsDoTasks) && playerInfo.IsDead)
             return Tuple.Create(0, 0);
         if (playerInfo.Role.IsImpostor)
             return Tuple.Create(0, 0);

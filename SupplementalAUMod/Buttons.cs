@@ -21,10 +21,11 @@ static class HudManagerStartPatch {
     {
         evilHackerButton = new CustomButton(
             () => {
-                PlayerControl.LocalPlayer.NetTransform.Halt();
-                Action<MapBehaviour> evilHackerAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
                 Patches.AdminPanelPatch.isEvilHackerAdmin = true;
-                FastDestroyableSingleton<HudManager>.Instance.ShowMap(evilHackerAction);
+                FastDestroyableSingleton<HudManager>.Instance.ToggleMapVisible(new MapOptions() {
+                        Mode = MapOptions.Modes.CountOverlay,
+                        AllowMovementWhileMapOpen = true
+                    });
             },
             () => {
                 return EvilHacker.evilHacker != null &&

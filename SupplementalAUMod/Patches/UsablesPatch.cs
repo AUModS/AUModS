@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 using static AUMod.Roles;
 using static AUMod.GameHistory;
-using static AUMod.MapOptions;
+using static AUMod.CustomMapOptions;
 using System.Collections.Generic;
 
 namespace AUMod.Patches
@@ -19,7 +19,7 @@ namespace AUMod.Patches
             [HarmonyArgument(1)] out bool canUse,
             [HarmonyArgument(2)] out bool couldUse)
         {
-            if (pc.Role.Role == RoleTypes.Engineer) {
+            if (pc.Role.Role == AmongUs.GameOptions.RoleTypes.Engineer) {
                 canUse = true;
                 couldUse = true;
                 return true;
@@ -121,14 +121,14 @@ namespace AUMod.Patches
 
             SystemConsole targetSysConsole = target.TryCast<SystemConsole>();
             if (targetSysConsole != null) {
-                if (!MapOptions.canUseVitals && isVitals(targetSysConsole.name))
+                if (!CustomMapOptions.canUseVitals && isVitals(targetSysConsole.name))
                     return true;
-                if (!MapOptions.canUseCameras && isCameras(targetSysConsole.name))
+                if (!CustomMapOptions.canUseCameras && isCameras(targetSysConsole.name))
                     return true;
             }
 
             MapConsole targetMapConsole = target.TryCast<MapConsole>();
-            if (targetMapConsole != null && !MapOptions.canUseAdmin)
+            if (targetMapConsole != null && !CustomMapOptions.canUseAdmin)
                 return true;
             return false;
         }
@@ -209,7 +209,7 @@ namespace AUMod.Patches
                 return;
             if (PlayerControl.LocalPlayer.Data.IsDead)
                 return;
-            if (!MapOptions.canUseAdmin)
+            if (!CustomMapOptions.canUseAdmin)
                 return;
 
             // Consume the time via RPC
@@ -243,7 +243,7 @@ namespace AUMod.Patches
         class MapConsoleUsePatch {
             public static bool Prefix(MapConsole __instance)
             {
-                return MapOptions.canUseAdmin;
+                return CustomMapOptions.canUseAdmin;
             }
         }
 
@@ -266,7 +266,7 @@ namespace AUMod.Patches
                 if (adminTimer > 0.1f)
                     ConsumeAdminTime();
 
-                if (!PlayerControl.LocalPlayer.Data.IsDead && !MapOptions.canUseAdmin && !isEvilHackerAdmin) {
+                if (!PlayerControl.LocalPlayer.Data.IsDead && !CustomMapOptions.canUseAdmin && !isEvilHackerAdmin) {
                     __instance.isSab = true;
                     __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
                     return false;
@@ -307,6 +307,7 @@ namespace AUMod.Patches
             }
         }
 
+        // still necessary?
         [HarmonyPatch(typeof(MapBehaviour), "get_IsOpenStopped")]
         class MapBehaviourGetIsOpenStoppedPatch {
             static bool Prefix(ref bool __result, MapBehaviour __instance)
@@ -337,7 +338,7 @@ namespace AUMod.Patches
         {
             if (PlayerControl.LocalPlayer.Data.IsDead)
                 return;
-            if (!MapOptions.canUseCameras)
+            if (!CustomMapOptions.canUseCameras)
                 return;
 
             // Consume the time via RPC
@@ -371,7 +372,7 @@ namespace AUMod.Patches
                     if (camerasTimer > 0.1f)
                         ConsumeCamerasTime();
 
-                    if (!PlayerControl.LocalPlayer.Data.IsDead && !MapOptions.canUseCameras) {
+                    if (!PlayerControl.LocalPlayer.Data.IsDead && !CustomMapOptions.canUseCameras) {
                         __instance.Close();
                         return false;
                     }
@@ -407,7 +408,7 @@ namespace AUMod.Patches
                     if (camerasTimer > 0.1f)
                         ConsumeCamerasTime();
 
-                    if (!PlayerControl.LocalPlayer.Data.IsDead && !MapOptions.canUseCameras) {
+                    if (!PlayerControl.LocalPlayer.Data.IsDead && !CustomMapOptions.canUseCameras) {
                         __instance.Close();
                         return false;
                     }
@@ -434,7 +435,7 @@ namespace AUMod.Patches
         {
             if (PlayerControl.LocalPlayer.Data.IsDead)
                 return;
-            if (!MapOptions.canUseVitals)
+            if (!CustomMapOptions.canUseVitals)
                 return;
 
             // Consume the time via RPC
@@ -466,7 +467,7 @@ namespace AUMod.Patches
                 if (vitalsTimer > 0.05f)
                     ConsumeVitalsTime();
 
-                if (!PlayerControl.LocalPlayer.Data.IsDead && !MapOptions.canUseVitals) {
+                if (!PlayerControl.LocalPlayer.Data.IsDead && !CustomMapOptions.canUseVitals) {
                     __instance.Close();
                     return false;
                 }

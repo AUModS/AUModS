@@ -72,7 +72,7 @@ namespace AUMod.Patches
     public class EndGameManagerSetUpPatch {
         public static void Postfix(EndGameManager __instance)
         {
-            if (MapOptions.showRoleSummary) {
+            if (CustomMapOptions.showRoleSummary) {
                 var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
                 GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
                 roleSummary.transform.position = new Vector3(__instance.FrontMost.transform.position.x + 0.1f, position.y - 0.1f, -14f);
@@ -100,7 +100,7 @@ namespace AUMod.Patches
         }
     }
 
-    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
+    [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
     class CheckEndCriteriaPatch {
         public static bool Prefix(ShipStatus __instance)
         {
@@ -152,7 +152,7 @@ namespace AUMod.Patches
         {
             if (GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
+                GameManager.Instance.RpcEndGame(GameOverReason.HumansByTask, false);
                 return true;
             }
             return false;
@@ -174,7 +174,7 @@ namespace AUMod.Patches
                     endReason = GameOverReason.ImpostorByVote;
                     break;
                 }
-                ShipStatus.RpcEndGame(endReason, false);
+                GameManager.Instance.RpcEndGame(endReason, false);
                 return true;
             }
             return false;
@@ -184,7 +184,7 @@ namespace AUMod.Patches
         {
             if (statistics.TeamImpostorsAlive == 0) {
                 __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByVote, false);
+                GameManager.Instance.RpcEndGame(GameOverReason.HumansByVote, false);
                 return true;
             }
             return false;
@@ -193,7 +193,7 @@ namespace AUMod.Patches
         private static void EndGameForSabotage(ShipStatus __instance)
         {
             __instance.enabled = false;
-            ShipStatus.RpcEndGame(GameOverReason.ImpostorBySabotage, false);
+            GameManager.Instance.RpcEndGame(GameOverReason.ImpostorBySabotage, false);
             return;
         }
     }

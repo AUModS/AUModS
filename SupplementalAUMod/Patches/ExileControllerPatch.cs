@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnhollowerBaseLib;
 using static AUMod.Roles;
-using static AUMod.MapOptions;
+using static AUMod.CustomMapOptions;
 using System.Collections;
 using System;
 using System.Text;
@@ -37,7 +37,7 @@ namespace AUMod.Patches
             // Reset custom button timers where necessary
             CustomButton.MeetingEndedUpdate();
 
-            MapOptions.MeetingEndedUpdate();
+            CustomMapOptions.MeetingEndedUpdate();
         }
     }
 
