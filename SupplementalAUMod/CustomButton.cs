@@ -145,8 +145,7 @@ public class CustomButton {
         if (text != null)
             actionButton.OverrideText(text);
         if (hudManager.UseButton != null && positionTransform) {
-            Vector3 pos = hudManager.UseButton.transform.localPosition;
-            actionButton.transform.localPosition = pos + positionOffset;
+            actionButton.transform.localPosition = FastDestroyableSingleton<HudManager>.Instance.AbilityButton.transform.localPosition + positionOffset;
         }
 
         if (CouldUse()) {

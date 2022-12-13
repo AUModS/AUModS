@@ -100,22 +100,32 @@ namespace AUMod.Patches
         }
     }
 
+    [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.IsGameOverDueToDeath))]
+    public class LogicGameFlowNormalPatch {
+        [HarmonyPostfix]
+        public static void Postfix2(ref bool __result)
+        {
+            __result = false;
+        }
+    }
+
     [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
     class CheckEndCriteriaPatch {
-        public static bool Prefix(ShipStatus __instance)
+        public static bool Prefix()
         {
             if (!GameData.Instance)
                 return false;
             if (DestroyableSingleton<TutorialManager>.InstanceExists) // InstanceExists | Don't check Custom Criteria when in Tutorial
                 return true;
-            var statistics = new PlayerStatistics(__instance);
-            if (CheckAndEndGameForSabotageWin(__instance))
+            ShipStatus ss = ShipStatus.Instance;
+            var statistics = new PlayerStatistics();
+            if (CheckAndEndGameForSabotageWin(ss))
                 return false;
-            if (CheckAndEndGameForTaskWin(__instance))
+            if (CheckAndEndGameForTaskWin(ss))
                 return false;
-            if (CheckAndEndGameForImpostorWin(__instance, statistics))
+            if (CheckAndEndGameForImpostorWin(ss, statistics))
                 return false;
-            if (CheckAndEndGameForCrewmateWin(__instance, statistics))
+            if (CheckAndEndGameForCrewmateWin(ss, statistics))
                 return false;
             return false;
         }
@@ -202,7 +212,7 @@ namespace AUMod.Patches
         public int TeamImpostorsAlive { get; set; }
         public int TotalAlive { get; set; }
 
-        public PlayerStatistics(ShipStatus __instance)
+        public PlayerStatistics()
         {
             GetPlayerCounts();
         }

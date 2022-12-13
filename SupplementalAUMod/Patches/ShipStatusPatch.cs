@@ -5,15 +5,6 @@ using Hazel;
 
 namespace AUMod.Patches
 {
-    [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.IsGameOverDueToDeath))]
-    public class LogicGameFlowNormalPatch {
-        [HarmonyPostfix]
-        public static void Postfix2(ShipStatus __instance, ref bool __result)
-        {
-            __result = false;
-        }
-    }
-
     [HarmonyPatch(typeof(ShipStatus))]
     public class ShipStatusPatch {
         [HarmonyPostfix]
