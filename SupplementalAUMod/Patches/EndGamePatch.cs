@@ -60,6 +60,9 @@ namespace AUMod.Patches
                     if (playerControl.Data.PlayerId == Madmate.madmate.PlayerId)
                         TempData.winners.Add(new WinningPlayerData(playerControl.Data));
                     break;
+                case (GameOverReason)99:
+                    TempData.winners = new();
+                    break;
                 }
             }
 
@@ -96,6 +99,13 @@ namespace AUMod.Patches
                 roleSummaryTextMeshRectTransform.anchoredPosition = new Vector2(position.x + 3.5f, position.y - 0.1f);
                 roleSummaryTextMesh.text = roleSummaryText.ToString();
             }
+
+            if (TempData.EndReason == (GameOverReason)99)
+            {
+                __instance.WinText.text = "Aborted";
+                __instance.WinText.color = __instance.BackgroundBar.material.color = Palette.DisabledGrey;
+            }
+
             AdditionalTempData.clear();
         }
     }
