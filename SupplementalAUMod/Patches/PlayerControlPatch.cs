@@ -155,8 +155,8 @@ namespace AUMod.Patches
                 string meetingInfoText = "";
                 if (p == PlayerControl.LocalPlayer) {
                     playerInfoText = $"{roleNames}";
-                    if (DestroyableSingleton<TaskPanelBehaviour>.InstanceExists) {
-                        TMPro.TextMeshPro tabText = DestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
+                    if (DestroyableSingleton<HudManager>.InstanceExists) {
+                        TMPro.TextMeshPro tabText = DestroyableSingleton<HudManager>.Instance.TaskPanel.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
                         tabText.SetText($"Tasks {taskInfo}");
                     }
                     meetingInfoText = $"{roleNames} {taskInfo}".Trim();
