@@ -103,7 +103,7 @@ namespace AUMod.Patches
 
         static void sheriffSetTarget()
         {
-            if (Sheriff.sheriff == null || Sheriff.sheriff != PlayerControl.LocalPlayer)
+            if (Sheriff.sheriff == null || Sheriff.sheriff != PlayerControl.LocalPlayer || Sheriff.remainingShots <= 0)
                 return;
             Sheriff.currentTarget = setTarget();
             setPlayerOutline(Sheriff.currentTarget, Sheriff.color);
