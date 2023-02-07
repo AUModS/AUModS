@@ -103,7 +103,7 @@ namespace AUMod.Patches
 
         static void sheriffSetTarget()
         {
-            if (Sheriff.sheriff == null || Sheriff.sheriff != PlayerControl.LocalPlayer)
+            if (Sheriff.sheriff == null || Sheriff.sheriff != PlayerControl.LocalPlayer || Sheriff.remainingShots <= 0)
                 return;
             Sheriff.currentTarget = setTarget();
             setPlayerOutline(Sheriff.currentTarget, Sheriff.color);
@@ -149,14 +149,15 @@ namespace AUMod.Patches
 
                 var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
                 string roleNames = String.Join(" ", RoleInfo.getRoleInfoForPlayer(p).Select(x => Helpers.cs(x.color, x.name)).ToArray());
-                string taskInfo = tasksTotal > 0 ? $"<color=#FAD934FF>({tasksCompleted}/{tasksTotal})</color>" : "";
+                var isComms = PlayerControl.LocalPlayer.myTasks.ToArray().Any(task => task.TaskType == TaskTypes.FixComms);
+                string taskInfo = tasksTotal > 0 ? $"<color=#FAD934FF>({(isComms ? "?" : tasksCompleted)}/{tasksTotal})</color>" : "";
 
                 string playerInfoText = "";
                 string meetingInfoText = "";
                 if (p == PlayerControl.LocalPlayer) {
                     playerInfoText = $"{roleNames}";
-                    if (DestroyableSingleton<TaskPanelBehaviour>.InstanceExists) {
-                        TMPro.TextMeshPro tabText = DestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
+                    if (DestroyableSingleton<HudManager>.InstanceExists) {
+                        TMPro.TextMeshPro tabText = DestroyableSingleton<HudManager>.Instance.TaskPanel.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
                         tabText.SetText($"Tasks {taskInfo}");
                     }
                     meetingInfoText = $"{roleNames} {taskInfo}".Trim();

@@ -43,8 +43,6 @@ public static class TasksHandler {
     private static class GameDataRecomputeTaskCountsPatch {
         private static bool Prefix(GameData __instance)
         {
-            if (!AmongUsClient.Instance.AmHost)
-                return false;
             __instance.TotalTasks = 0;
             __instance.CompletedTasks = 0;
             for (int i = 0; i < __instance.AllPlayers.Count; i++) {
