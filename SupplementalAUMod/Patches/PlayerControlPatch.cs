@@ -245,4 +245,14 @@ namespace AUMod.Patches
                 __instance.clearAllTasks();
         }
     }
+
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckMurder))]
+    public static class CheckMurderPatch {
+        public static bool Prefix([HarmonyArgument(0)] PlayerControl target)
+        {
+            if (!AmongUsClient.Instance.AmHost) return false;
+            // block bad kills
+            return !target.onLadder;
+        }
+    }
 }
