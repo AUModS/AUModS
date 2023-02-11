@@ -250,9 +250,10 @@ namespace AUMod.Patches
     public static class CheckMurderPatch {
         public static bool Prefix([HarmonyArgument(0)] PlayerControl target)
         {
-            if (!AmongUsClient.Instance.AmHost) return false;
-            // block bad kills
-            return !target.onLadder;
+            // prevent executing RpcMurderPlayer if the target player is on a ladder
+            if (AmongUsClient.Instance.AmHost && target != null && target.onLadder)
+                return false;
+            return true;
         }
     }
 }
