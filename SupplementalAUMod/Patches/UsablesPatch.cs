@@ -377,7 +377,7 @@ namespace AUMod.Patches
                         return false;
                     }
 
-                    return false;
+                    return true;
                 }
             }
 
@@ -413,7 +413,7 @@ namespace AUMod.Patches
                         return false;
                     }
 
-                    return false;
+                    return true;
                 }
             }
 
