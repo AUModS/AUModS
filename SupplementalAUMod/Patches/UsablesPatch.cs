@@ -287,20 +287,25 @@ namespace AUMod.Patches
                         continue;
 
                     PlainShipRoom plainShipRoom = ShipStatus.Instance.FastRooms[counterArea.RoomType];
-                    if (plainShipRoom != null && plainShipRoom.roomArea) {
-                        int num = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
-                        int num2 = num;
+                    if (plainShipRoom && plainShipRoom.roomArea) {
+                        HashSet<byte> alreadyCounted = new();
+                        int numBuffer = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
+                        int count = 0;
 
-                        for (int j = 0; j < num; j++) {
+                        for (int j = 0; j < numBuffer; j++) {
                             Collider2D collider2D = __instance.buffer[j];
-                            if (!(collider2D.tag == "DeadBody")) {
-                                PlayerControl component = collider2D.GetComponent<PlayerControl>();
-                                if (!component || component.Data == null || component.Data.Disconnected || component.Data.IsDead) {
-                                    num2--;
-                                }
+                            if (collider2D.CompareTag("DeadBody")) {
+                                count++;
+                            } else if (
+                                collider2D.GetComponent<PlayerControl>() is PlayerControl player
+                                && player.Data != null
+                                && !player.Data.Disconnected
+                                && !player.Data.IsDead
+                                && alreadyCounted.Add(player.PlayerId)) {
+                                count++;
                             }
                         }
-                        counterArea.UpdateCount(num2);
+                        counterArea.UpdateCount(count);
                     }
                 }
                 return false;
