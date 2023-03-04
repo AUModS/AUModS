@@ -245,15 +245,4 @@ namespace AUMod.Patches
                 __instance.clearAllTasks();
         }
     }
-
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckMurder))]
-    public static class CheckMurderPatch {
-        public static bool Prefix([HarmonyArgument(0)] PlayerControl target)
-        {
-            // prevent executing RpcMurderPlayer if the target player is on a ladder
-            if (AmongUsClient.Instance.AmHost && target != null && target.onLadder)
-                return false;
-            return true;
-        }
-    }
 }
