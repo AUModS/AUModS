@@ -1,9 +1,5 @@
 # AUModS
 
-**Caution**:
-Only the alpha version of AUModS is available so far.
-You are **NOT** customers. You are participants.
-
 AUModS is a plugin to play Madmate and EvilHacker on AmongUs.
 A large part of its code base is shared with [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles) and its forks[[1]](https://github.com/yukinogatari/TheOtherRoles-GM)[[2]](https://github.com/haoming37/TheOtherRoles-GM-Haoming)[[3]](https://github.com/tomarai/TheOtherRoles).
 
